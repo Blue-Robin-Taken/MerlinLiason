@@ -1,3 +1,3 @@
-git pull https://github.com/Blue-Robin-Taken/MerlinLiason.git
+git reset --hard origin/main
 ./setPermissions.sh
 echo "updated"

@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "parcel client/index.html"
+    "dev": "parcel client/index.html",
+    "serve":"parcel client/server.js"
   }
 }

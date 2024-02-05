@@ -1,0 +1,13 @@
+{
+  "name": "MerlinLiason",
+  "version": "1.0.0",
+  "description": "An sh based webserver for chatting made to run on codermerlin",
+  "main": "index.js",
+  "repository": "https://github.com/Blue-Robin-Taken/MerlinLiason",
+  "author": "Stylo <136652260+stylo-codes-stuff@users.noreply.github.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "parcel client/index.html"
+  }
+}

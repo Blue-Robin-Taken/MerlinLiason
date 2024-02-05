@@ -1,0 +1,6 @@
+/.parcel-cache
+/node_modules
+/.devcontainer
+/.codesandbox
+/dist
+yarn-error.log

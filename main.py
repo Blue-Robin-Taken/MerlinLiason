@@ -127,4 +127,4 @@ def disconnect():
 def connect_error(message):
     print('Connection was rejected due to ' + message)
 if __name__ == "__main__":
-    socketio.run(app,host="0.0.0.0" port="1299",debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app,host="0.0.0.0", port="1299",debug=True, allow_unsafe_werkzeug=True)

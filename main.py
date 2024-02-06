@@ -8,7 +8,7 @@ socketio = SocketIO(app)
 #dictionary with rooms and their corresponding codes
 rooms = {}
 from flask_socketio import ConnectionRefusedError
-socketCount = 14
+socketCount = 0
 allocatedMem = 0
 def memCheck(room):
     if socketCount*70> allocatedMem*1000 - 10:
@@ -93,7 +93,7 @@ def connect(auth):
     name = session.get("name")
     #memory check
     if memCheck(room):
-        raise ConnectionRefusedError("error code:out of memory connection refused")
+        raise ConnectionRefusedError(f"out of memory connection refused please wait to try opening another chatroom \n allocated memory(MB): {allocatedMem} \n socketMemory(MB): {socketCount*70/1000}")
     else:
         print("memory good")
     if not room or not name:

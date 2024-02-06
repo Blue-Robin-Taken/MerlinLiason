@@ -24,6 +24,7 @@
           ${error}
         </span>
     </div>`
+    messages.innerHTML += content;
     }
   try{
   var socketio = io();
@@ -45,6 +46,9 @@
   socketio.on("message", (data) => {
     createMessage(data.name, data.message,);
   });
+  socketio.on('connect_error', (err) => {
+    document.body.innerHTML = err;
+  })
 
   const sendMessage = () => {
     const message = document.getElementById("message");
@@ -53,7 +57,7 @@
     message.value = "";
   };
 }catch(error){
-  document.body.innerHTML = "";
+  document.body.innerHTML = error;
 }
 </script>
  {% endblock %}

@@ -19,7 +19,7 @@
   var socketio = io();
 
   const messages = document.getElementById("messages");
-
+  const textbox = document.getElementById("message")
   const createMessage = (name, msg) => {
     const content = `
     <div class="text">
@@ -33,11 +33,14 @@
     `;
     messages.innerHTML += content;
   };
-
+  socketio.on("connect",(data)=>{
+    messages.innerHTML += data.error
+  })
   socketio.on("message", (data) => {
-    createMessage(data.name, data.message);
-  });
+    createMessage(data.name, data.message,);
+    messages.innerHTML += data.error
 
+  });
   const sendMessage = () => {
     const message = document.getElementById("message");
     if (message.value == "") return;

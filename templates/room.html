@@ -16,10 +16,19 @@
   </div>
 </div>
 <script type="text/javascript">
+  const messages = document.getElementById("messages");
+  function createError(error){
+    const content= `    
+    <div class="text">
+        <span>
+          ${error}
+        </span>
+    </div>`
+    }
+  try{
   var socketio = io();
 
-  const messages = document.getElementById("messages");
-  const textbox = document.getElementById("message")
+
   const createMessage = (name, msg) => {
     const content = `
     <div class="text">
@@ -33,19 +42,18 @@
     `;
     messages.innerHTML += content;
   };
-  socketio.on("connect",(data)=>{
-    messages.innerHTML += data.error
-  })
   socketio.on("message", (data) => {
     createMessage(data.name, data.message,);
-    messages.innerHTML += data.error
-
   });
+
   const sendMessage = () => {
     const message = document.getElementById("message");
     if (message.value == "") return;
     socketio.emit("message", { data: message.value });
     message.value = "";
   };
+}catch(error){
+  document.body.innerHTML = "";
+}
 </script>
  {% endblock %}

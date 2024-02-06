@@ -2,11 +2,9 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, emit,SocketIO,ConnectionRefusedError
 import random
 from string import ascii_uppercase
-socketCount = 0
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
 socketio = SocketIO(app)
-allocatedMEMORY = None
 #dictionary with rooms and their corresponding codes
 rooms = {}
 from flask_socketio import ConnectionRefusedError
@@ -95,10 +93,9 @@ def connect(auth):
     name = session.get("name")
     #memory check
     if memCheck(room):
-        send({"error":"connection refused due to lack of memory please wait to open a new connection"},to=room)
         raise ConnectionRefusedError("error code:out of memory connection refused")
     else:
-        print
+        print("memory good")
     if not room or not name:
         return
     if room not in rooms:
@@ -124,6 +121,8 @@ def disconnect():
     
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
-
+@socketio.event
+def connect_error(message):
+    print('Connection was rejected due to ' + message)
 if __name__ == "__main__":
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

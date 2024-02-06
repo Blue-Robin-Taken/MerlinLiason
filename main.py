@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, emit,SocketIO,ConnectionRefusedError
+import os
 import random
 from string import ascii_uppercase
 app = Flask(__name__)
@@ -9,7 +10,8 @@ socketio = SocketIO(app)
 rooms = {}
 from flask_socketio import ConnectionRefusedError
 socketCount = 0
-allocatedMem = 0
+allocatedMem = os.environ[""]
+print(allocatedMem)
 def memCheck(room):
     if socketCount*70> allocatedMem*1000 - 10:
         print(f"memory close to being exceeded refusing connection for {room}")
@@ -125,4 +127,4 @@ def disconnect():
 def connect_error(message):
     print('Connection was rejected due to ' + message)
 if __name__ == "__main__":
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app, port="8080",debug=True, allow_unsafe_werkzeug=True)

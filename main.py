@@ -111,6 +111,7 @@ def connect(auth):
 
 @socketio.on("disconnect")
 def disconnect():
+    global socketCount
     socketCount = socketCount-1
     room = session.get("room")
     name = session.get("name")

@@ -5,12 +5,12 @@ import random
 from string import ascii_uppercase
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
-socketio = SocketIO(app)
+#config for getting it to run on codermerlin
+socketio = SocketIO(app,cors_allowed_origins="https://www.codermerlin.academy")
 #dictionary with rooms and their corresponding codes
 rooms = {}
-from flask_socketio import ConnectionRefusedError
 socketCount = 0
-allocatedMem = os.environ[""]
+allocatedMem = 300
 print(allocatedMem)
 def memCheck(room):
     if socketCount*70> allocatedMem*1000 - 10:

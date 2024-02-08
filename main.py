@@ -6,7 +6,7 @@ from string import ascii_uppercase
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
 #config for getting it to run on codermerlin
-socketio = SocketIO(app,cors_allowed_origins="https://www.codermerlin.academy")
+socketio = SocketIO(app)
 #dictionary with rooms and their corresponding codes
 rooms = {}
 socketCount = 0

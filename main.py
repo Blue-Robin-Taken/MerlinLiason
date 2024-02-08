@@ -12,6 +12,8 @@ rooms = {}
 socketCount = 0
 allocatedMem = 300
 print(allocatedMem)
+
+#memory check function
 def memCheck(room):
     if socketCount*70> allocatedMem*1000 - 10:
         print(f"memory close to being exceeded refusing connection for {room}")
@@ -20,6 +22,8 @@ def memCheck(room):
     else:
         print("safe amount of memory is being used")
         return False
+
+
 #room code generator
 def generate_unique_code(length):
     while True:
@@ -31,6 +35,9 @@ def generate_unique_code(length):
             break
     
     return code
+
+
+
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -57,16 +64,19 @@ def home():
         
         session["room"] = room
         session["name"] = name
-        return redirect(url_for("room"))
+        return redirect("room")
 
     return render_template("home.html")
+
+
+
 
 @app.route("/room")
 def room():
     #if you try and load the room route without being in a room or without a name it redirects you to the homepage
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
-        return redirect(url_for("home"))
+        return redirect("/")
     #all goes well? cool! you get loaded into a room
     return render_template("room.html", code=room, messages=rooms[room]["messages"])
 #socketio message event listener
@@ -84,6 +94,10 @@ def message(data):
     send(content, to=room)
     rooms[room]["messages"].append(content)
     print(f"{session.get('name')} said: {data['data']}")
+
+
+
+
 #socketio connection event listener
 @socketio.on("connect")
 def connect(auth):
@@ -109,6 +123,9 @@ def connect(auth):
     rooms[room]["members"] += 1
     print(f"{name} joined room {room}")
 
+
+
+
 @socketio.on("disconnect")
 def disconnect():
     global socketCount
@@ -124,8 +141,8 @@ def disconnect():
     
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
-@socketio.event
-def connect_error(message):
-    print('Connection was rejected due to ' + message)
+
+
+
 if __name__ == "__main__":
     socketio.run(app,host="0.0.0.0", port="12199",debug=True, allow_unsafe_werkzeug=True)

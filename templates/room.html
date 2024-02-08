@@ -17,7 +17,7 @@
 </div>
 <script type="text/javascript">
   const messages = document.getElementById("messages");
-  var socketio = io("https://www.codermerlin.academy",{path:'/vapor/logan-thomas/socket.io'});
+  var socketio = io();
   const createMessage = (name, msg) => {
     const content = `
     <div class="text">

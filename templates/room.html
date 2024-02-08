@@ -17,19 +17,7 @@
 </div>
 <script type="text/javascript">
   const messages = document.getElementById("messages");
-  function createError(error){
-    const content= `    
-    <div class="text">
-        <span>
-          ${error}
-        </span>
-    </div>`
-    messages.innerHTML += content;
-    }
-  try{
-  var socketio = io();
-
-
+  var socketio = io("https://www.codermerlin.academy",{path:'vapor/logan-thomas/socket.io'});
   const createMessage = (name, msg) => {
     const content = `
     <div class="text">
@@ -47,7 +35,7 @@
     createMessage(data.name, data.message,);
   });
   socketio.on('connect_error', (err) => {
-    document.body.innerHTML = err;
+    console.log(err)
   })
 
   const sendMessage = () => {
@@ -56,8 +44,5 @@
     socketio.emit("message", { data: message.value });
     message.value = "";
   };
-}catch(error){
-  document.body.innerHTML = error;
-}
 </script>
  {% endblock %}
